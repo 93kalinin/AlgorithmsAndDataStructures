@@ -6,16 +6,13 @@ class Sorts {
      * than the one in question to the right by using System.arraycopy. It puts the element in that position of the
      * array, thus enlarging the sorted part by one element. Then the process repeats until the whole array is sorted.
      */
-     /*
-     Более удачным решением будет искать место для рассматриваемого элемента с начала массива?
-      */
     static void insertion(int[] input) {
         if (input.length <= 1) return;
         for (int endOfSorted = 1; endOfSorted < input.length; ++endOfSorted) {
             int toBeSorted = input[endOfSorted];
-            int insertHere = endOfSorted - 1;
-            boolean shiftRequired = toBeSorted < input[insertHere];
-            while (insertHere > 0  &&  toBeSorted < input[insertHere]) insertHere--;
+            int insertHere = 0;
+            boolean shiftRequired = toBeSorted < input[endOfSorted - 1];
+            while (insertHere < endOfSorted  &&  toBeSorted > input[insertHere]) insertHere++;
             if (shiftRequired) {
                 System.out.println("insertHere " + insertHere + " endOfSorted " + endOfSorted);
                 System.arraycopy(input, insertHere, input, insertHere + 1, endOfSorted - insertHere);
