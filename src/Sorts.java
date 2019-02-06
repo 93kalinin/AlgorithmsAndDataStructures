@@ -14,20 +14,14 @@ class Sorts {
             boolean shiftRequired = toBeSorted < input[endOfSorted - 1];
             while (insertHere < endOfSorted  &&  toBeSorted > input[insertHere]) insertHere++;
             if (shiftRequired) {
-                System.out.println("insertHere " + insertHere + " endOfSorted " + endOfSorted);
                 System.arraycopy(input, insertHere, input, insertHere + 1, endOfSorted - insertHere);
                 input[insertHere] = toBeSorted;
-                }
-            for (int i : input) System.out.print(i + " ");
-            System.out.println();
-            }
-        }
+        }   }   }
 
     /**
-     * Сортировка выбором циклически просматривает несортированную часть массива и находит наименьший элемент с помощью
-     * метода findSmallest, затем освобождает место в сортированной части массива сдвигом элементов вправо на единицу
-     * до той ячейки, откуда был скопирован наименьший элемент вызовом System.arraycopy и помещает этот элемент
-     * в освободившуюся ячейку, тем самым присоединяя его к расширенной за счет сдвига сортированной части.
+     * Selection sort finds the smallest element in the unsorted part of the array and makes one free cell for it
+     * by shifting every element between the end of the sorted part and the smallest element to the right. It then
+     * puts the smallest element it found in that free cell and repeats the whole process untill the array is sorted.
      */
     static void selection(int[] input) {
         if (input.length <= 1) return;
@@ -51,16 +45,18 @@ class Sorts {
         }
 
     /**
-     * Доработанный алгоритм сортировки пузырьком. Берет первый неупорядоченный относительно следующего элемент и
-     * сдвигает следующие элементы до тех пор, пока не найдет взятому элементу место. Проходит по такому принципу
-     * в прямом и обратном направлениях, ускоряя тем самым помещение элементов в конечные позиции. Дополнительно,
-     * пользуется "окном" -- просматривает только ту часть массива, в которой были сдвиги элементов при прошлом
-     * просмотре. Если элементы не были сдвинуты, то эта часть массива уже упорядочена. Останавливается при сужении
-     * окна до нуля.
+     * Bubble sort with several adjustments. Makes space for the element it currently works on by shifting smaller
+     * elements instead of swapping pairs of elements. Additionally, it interleaves passes from right to left
+     * and from left to right for better performance in some cases. Lastly, it only works on the part of the array
+     * that had some changes happen to it in previous passes, because there is no point in checking the rest
+     * of the array -- it is already sorted. The sorting is done when that active part of the array contracts to zero.
      */
-    public static void main(String... args) {
-        int[] input = {14, 22, 64, 182, 241, 11, -9, 0};
-
-        Sorts.insertion(input);
-        }
-    }
+    static void bubble(int[] input) {
+        if (input.length <= 1) return;
+        int leftMargin = 0;
+        int rightMargin = input.length - 1;
+        while (rightMargin != leftMargin) {
+            for (int forward = leftMargin; forward < rightMargin; ++forward) {
+                boolean shiftIsRequired = input[forward] > input[forward + 1];
+                if (input[forward] > input[forward + 1]
+            }
