@@ -7,7 +7,7 @@ class Sorts {
      * array, thus enlarging the sorted part by one element. Then the process repeats until the whole array is sorted.
      */
     static void insertion(int[] input) {
-        if (input.length <= 1) return;
+        if (input == null  ||  input.length <= 1) return;
         for (int endOfSorted = 1; endOfSorted < input.length; ++endOfSorted) {
             int toBeSorted = input[endOfSorted];
             int insertHere = 0;
@@ -24,7 +24,7 @@ class Sorts {
      * puts the smallest element it found in that free cell and repeats the whole process untill the array is sorted.
      */
     static void selection(int[] input) {
-        if (input.length <= 1) return;
+        if (input == null  ||  input.length <= 1) return;
         for (int endOfSortedPart = 0; endOfSortedPart < input.length; ++endOfSortedPart) {
             int indexOfSmallest = findSmallest(input, endOfSortedPart);
             int smallest = input[indexOfSmallest];
@@ -44,19 +44,22 @@ class Sorts {
         return index;
         }
 
+    static void heap(int[] input) {
+        if (input == null  ||  input.length <= 1) return;
+
+        }
+
     /**
-     * Bubble sort with several adjustments. Makes space for the element it currently works on by shifting smaller
-     * elements instead of swapping pairs of elements. Additionally, it interleaves passes from right to left
-     * and from left to right for better performance in some cases. Lastly, it only works on the part of the array
-     * that had some changes happen to it in previous passes, because there is no point in checking the rest
-     * of the array -- it is already sorted. The sorting is done when that active part of the array contracts to zero.
+     * This utility method can turn a random array of integers into a binary heap or fix a binary heap if it has been
+     * corrupted in some way. For instance, it happens after removal of the root element of a heap.
      */
-    static void bubble(int[] input) {
-        if (input.length <= 1) return;
-        int leftMargin = 0;
-        int rightMargin = input.length - 1;
-        while (rightMargin != leftMargin) {
-            for (int forward = leftMargin; forward < rightMargin; ++forward) {
-                boolean shiftIsRequired = input[forward] > input[forward + 1];
-                if (input[forward] > input[forward + 1]
-            }
+    private static void fixHeap(int[] input) {
+        for (int i = 0; i < input.length; ++i) {
+            for (int j = i; j != 0; j = (j - 1) / 2) {
+                if (input[j] > input[(j - 1) / 2]) {
+                    int tmp = input[j];
+                    input[j] = input[(j - 1) / 2];
+                    input[(j - 1) / 2] = tmp;
+                    }
+                else break;
+    }   }   }   }

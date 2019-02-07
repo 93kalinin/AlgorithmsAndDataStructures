@@ -31,5 +31,4 @@ class SortTest {
         Sorts.selection(input);
 
         Assertions.assertArrayEquals(expected, input);
-    }
-}
+    }   }
