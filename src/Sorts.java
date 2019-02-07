@@ -21,7 +21,7 @@ class Sorts {
     /**
      * Selection sort finds the smallest element in the unsorted part of the array and makes one free cell for it
      * by shifting every element between the end of the sorted part and the smallest element to the right. It then
-     * puts the smallest element it found in that free cell and repeats the whole process untill the array is sorted.
+     * puts the smallest element it found in that free cell and repeats the whole process until the array is sorted.
      */
     static void selection(int[] input) {
         if (input == null  ||  input.length <= 1) return;
@@ -44,17 +44,30 @@ class Sorts {
         return index;
         }
 
+    /**
+     * Heap sort turns an array into a binary heap. Then it puts the root of the heap into the sorted part of the array
+     * at its end and replaces it with a leaf that can be found right before the sorted part. The heap at this point is
+     * broken, so it fixes it and proceeds adding new roots of the heap one by one to the sorted part and fixing the
+     * heap until there is nothing left to sorted. The root of the heap is always the largest in the heap, so the
+     * algorithm appends to the sorted part the largest element that is left in the unsorted (heap) part of the array.
+     */
     static void heap(int[] input) {
         if (input == null  ||  input.length <= 1) return;
-
-        }
+        for (int sortedLength = 0; sortedLength < input.length; ++sortedLength) {
+            fixHeap(input, sortedLength);
+            int tmp = input[input.length - sortedLength - 1];
+            input[input.length - sortedLength - 1] = input[0];
+            input[0] = tmp;
+        }   }
 
     /**
      * This utility method can turn a random array of integers into a binary heap or fix a binary heap if it has been
-     * corrupted in some way. For instance, it happens after removal of the root element of a heap.
+     * corrupted in some way. For instance, it happens after removal of the root element of a heap. Facilitates heap
+     * sort by allowing to store the sorted part of the array at the end of the same array and ignoring that part of it
+     * @param sorted is the length of the sorted part at the end
      */
-    private static void fixHeap(int[] input) {
-        for (int i = 0; i < input.length; ++i) {
+    private static void fixHeap(int[] input, int sorted) {
+        for (int i = 0; i < input.length - sorted; ++i) {
             for (int j = i; j != 0; j = (j - 1) / 2) {
                 if (input[j] > input[(j - 1) / 2]) {
                     int tmp = input[j];

@@ -8,7 +8,7 @@ class SortTest {
         int[] input = {14, 22, 64, 182, 241, 11, -9, 0};
         int[] expected = {-9, 0, 11, 14, 22, 64, 182, 241};
 
-        Sorts.selection(input);
+        Sorts.heap(input);
 
         Assertions.assertArrayEquals(expected, input);
     }
@@ -18,7 +18,7 @@ class SortTest {
         int[] input = {};
         int[] expected = {};
 
-        Sorts.selection(input);
+        Sorts.heap(input);
 
         Assertions.assertArrayEquals(expected, input);
     }
@@ -28,7 +28,7 @@ class SortTest {
         int[] input = {0};
         int[] expected = {0};
 
-        Sorts.selection(input);
+        Sorts.heap(input);
 
         Assertions.assertArrayEquals(expected, input);
     }   }
