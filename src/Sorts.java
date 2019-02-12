@@ -26,23 +26,12 @@ class Sorts {
     static void selection(int[] input) {
         if (input == null  ||  input.length <= 1) return;
         for (int endOfSortedPart = 0; endOfSortedPart < input.length; ++endOfSortedPart) {
-            int indexOfSmallest = findSmallest(input, endOfSortedPart);
+            int indexOfSmallest = Utilities.findSmallest(input, endOfSortedPart);
             int smallest = input[indexOfSmallest];
             System.arraycopy(input, endOfSortedPart, input, endOfSortedPart + 1,
             indexOfSmallest - endOfSortedPart);
             input[endOfSortedPart] = smallest;
         }   }
-
-    private static int findSmallest(int[] input, int beginning) {
-        int smallestUnsorted = Integer.MAX_VALUE;
-        int index = 0;
-        for (int i = beginning; i < input.length; ++i) {
-            if (input[i] < smallestUnsorted) {
-                smallestUnsorted = input[i];
-                index = i;
-            }   }
-        return index;
-        }
 
     /**
      * Heap sort turns an array into a binary heap. Then it puts the root of the heap into the sorted part of the array
@@ -54,25 +43,35 @@ class Sorts {
     static void heap(int[] input) {
         if (input == null  ||  input.length <= 1) return;
         for (int sortedLength = 0; sortedLength < input.length; ++sortedLength) {
-            fixHeap(input, sortedLength);
+            Utilities.fixHeap(input, sortedLength);
             int tmp = input[input.length - sortedLength - 1];
             input[input.length - sortedLength - 1] = input[0];
             input[0] = tmp;
         }   }
 
+
     /**
-     * This utility method can turn a random array of integers into a binary heap or fix a binary heap if it has been
-     * corrupted in some way. For instance, it happens after removal of the root element of a heap. Facilitates heap
-     * sort by allowing to store the sorted part of the array at the end of the same array and ignoring that part of it
-     * @param sorted is the length of the sorted part at the end
+     * Quicksort picks an array element and moves every element which is larger than the picked one to the right part
+     * of the array, and each element that is smaller than the picked one to the left part. It then recursively calls
+     * itself on those parts until they are one element long and therefore sorted. Finally, it merges the results
+     * in the sorted order. This implementation chooses a random dividing element and sorts in place. It can be done
+     * by going through the following steps. Swap the dividing element with the one at the beginning of the array.
+     * Remove it from the array. That frees up the first cell of it. Now search for an element which is less than the
+     * dividing one, starting from the end of the array. Put it in the free cell. There is another free cell now where
+     * that smaller element was removed from. Find an element that is larger than the dividing one, starting from
+     * the beginning of the array and put it in the free cell. Repeat until the two regions in which the search is
+     * being done meet somewhere and put the dividing item in the free cell Call the method recursively to keep sorting
+     * @param beginning -- the index of the beginning of the part of the array which should be sorted, inclusive
+     * @param end -- the index of the end of the part of the array which should be sorted, exclusive
      */
-    private static void fixHeap(int[] input, int sorted) {
-        for (int i = 0; i < input.length - sorted; ++i) {
-            for (int j = i; j != 0; j = (j - 1) / 2) {
-                if (input[j] > input[(j - 1) / 2]) {
-                    int tmp = input[j];
-                    input[j] = input[(j - 1) / 2];
-                    input[(j - 1) / 2] = tmp;
-                    }
-                else break;
-    }   }   }   }
+    static void quick(int[] input, int beginning, int end) {
+        int randomIndex = Utilities.random.nextInt(input.length);
+        int divider = input[randomIndex];
+        input[randomIndex] = input[0];
+        int holeIndex = 0;
+
+        while(true) {
+            for (int index = end - 1; index != holeIndex; --index) {
+
+                }
+    }   }
