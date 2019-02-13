@@ -65,13 +65,31 @@ class Sorts {
      * @param end -- the index of the end of the part of the array which should be sorted, exclusive
      */
     static void quick(int[] input, int beginning, int end) {
-        int randomIndex = Utilities.random.nextInt(input.length);
+        int segmentLength = end - beginning - 1;
+        if (segmentLength <= 1) return;
+        int randomIndex = Utilities.random.nextInt(segmentLength);
         int divider = input[randomIndex];
-        input[randomIndex] = input[0];
-        int holeIndex = 0;
+        input[randomIndex] = input[beginning];
+        int currentHole = beginning;
+        int previousHole = end - 1;
 
         while(true) {
-            for (int index = end - 1; index != holeIndex; --index) {
-
+            int smallerItemIndex = Utilities.searchFromBack(input, previousHole, currentHole, divider);
+            if (smallerItemIndex == -1) break;
+            else {
+                input[currentHole] = input[smallerItemIndex];
+                previousHole = currentHole;
+                currentHole = smallerItemIndex;
                 }
+            int biggerItemIndex = Utilities.searchFromFront(input, previousHole, currentHole, divider);
+            if (biggerItemIndex == -1) break;
+            else {
+                input[currentHole] = input[biggerItemIndex];
+                previousHole = currentHole;
+                currentHole = biggerItemIndex;
+            }   }
+
+        input[currentHole] = divider;
+        quick(input, currentHole + 1, end);
+        quick(input, beginning, currentHole);
     }   }

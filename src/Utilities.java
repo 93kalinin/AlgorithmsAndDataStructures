@@ -35,6 +35,7 @@ class Utilities {
         return -1;
     }
 
+    //TODO: this method is a special case (or is it?) of a more general searchFromFront ang should call it
     static int findSmallest(int[] input, int beginning) {
         int smallestUnsorted = Integer.MAX_VALUE;
         int index = 0;
