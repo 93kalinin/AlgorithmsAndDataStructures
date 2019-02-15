@@ -32,15 +32,25 @@ class Sorts {
         }   }
 
     /**
-     * Bubble sort passes an array from left to right and swaps any pair of elements that it finds to be unordered.
+     * Bubble sort passes an array forwards and backwards and swaps any pair of elements that it finds to be unordered.
+     * Additionally, it only passes through the unsorted part of the array. If it passes a certain part of the array
+     * and makes no swaps, the algorithm marks that part as sorted and ignores it for the rest of sorting.
      */
     static void bubble(int[] input) {
         boolean isSorted = false;
+        boolean isFirstLeft = false;
+        boolean isFirstRight = false;
+        int firstLeft = 0;
+        int firstRight = input.length - 1;
         while (!isSorted) {
             isSorted = true;
-            for (int i = 0; i < input.length - 1; ++i) {
+            isFirstLeft = false;
+            isFirstRight = false;
+            for (int i = firstLeft; i < firstRight; ++i) {
                 if (input[i] > input[i + 1]) {
                     isSorted = false;
+                    if (!isFirstLeft) firstLeft = i;
+                    isFirstLeft = true;
                     int temporary = input[i];
                     input[i] = input[i + 1];
                     input[i + 1] = temporary;
@@ -49,6 +59,8 @@ class Sorts {
             for (int i = input.length - 1; i > 1; --i) {
                 if (input[i] < input[i - 1]) {
                     isSorted = false;
+                    if (!isFirstRight) firstRight = i;
+                    isFirstRight = true;
                     int temporary = input[i];
                     input[i] = input[i - 1];
                     input[i - 1] = temporary;
