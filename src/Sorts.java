@@ -44,7 +44,18 @@ class Sorts {
                     int temporary = input[i];
                     input[i] = input[i + 1];
                     input[i + 1] = temporary;
-        }   }   }   }
+                }
+            }
+            for (int i = input.length - 1; i > 1; --i) {
+                if (input[i] < input[i - 1]) {
+                    isSorted = false;
+                    int temporary = input[i];
+                    input[i] = input[i - 1];
+                    input[i - 1] = temporary;
+                }
+            }
+        }
+    }
 
     /**
      * Heap sort turns an array into a binary heap. Then it puts the root of the heap into the sorted part of the array
