@@ -12,9 +12,7 @@ class Utilities {
      * @return index of the item in the input array which is smaller than the divider or -1 if no such item is found
      */
     static int searchFromBack(int[] input, int beginning, int end, int divider) {
-        if (input == null || input.length == 0 || beginning <= end)
-            throw new IllegalArgumentException("The array is null or empty or the search segment is invalid.");
-        for (int index = beginning; index != end - 1; --index)
+        for (int index = beginning; index != end; --index)
             if (input[index] < divider) return index;
         return -1;
         }
@@ -28,9 +26,7 @@ class Utilities {
      * item is found
      */
     static int searchFromFront(int[] input, int beginning, int end, int divider) {
-        if (input == null || input.length == 0 || beginning >= end)
-            throw new IllegalArgumentException("The array is null or empty or the search segment is invalid.");
-        for (int index = beginning; index != end - 1; ++index)
+        for (int index = beginning; index != end; ++index)
             if (input[index] >= divider) return index;
         return -1;
     }

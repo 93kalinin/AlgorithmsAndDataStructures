@@ -7,7 +7,6 @@ class Sorts {
      * array, thus enlarging the sorted part by one element. Then the process repeats until the whole array is sorted.
      */
     static void insertion(int[] input) {
-        if (input == null  ||  input.length <= 1) return;
         for (int endOfSorted = 1; endOfSorted < input.length; ++endOfSorted) {
             int toBeSorted = input[endOfSorted];
             int insertHere = 0;
@@ -24,7 +23,6 @@ class Sorts {
      * puts the smallest element it found in that free cell and repeats the whole process until the array is sorted.
      */
     static void selection(int[] input) {
-        if (input == null  ||  input.length <= 1) return;
         for (int endOfSortedPart = 0; endOfSortedPart < input.length; ++endOfSortedPart) {
             int indexOfSmallest = Utilities.findSmallest(input, endOfSortedPart);
             int smallest = input[indexOfSmallest];
@@ -32,6 +30,21 @@ class Sorts {
             indexOfSmallest - endOfSortedPart);
             input[endOfSortedPart] = smallest;
         }   }
+
+    /**
+     * Bubble sort passes an array from left to right and swaps any pair of elements that it finds to be unordered.
+     */
+    static void bubble(int[] input) {
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < input.length - 1; ++i) {
+                if (input[i] > input[i + 1]) {
+                    isSorted = false;
+                    int temporary = input[i];
+                    input[i] = input[i + 1];
+                    input[i + 1] = temporary;
+        }   }   }   }
 
     /**
      * Heap sort turns an array into a binary heap. Then it puts the root of the heap into the sorted part of the array
@@ -65,7 +78,7 @@ class Sorts {
      * @param end -- the index of the end of the part of the array which should be sorted, exclusive
      */
     static void quick(int[] input, int beginning, int end) {
-        int segmentLength = end - beginning - 1;
+        int segmentLength = end - beginning;
         if (segmentLength <= 1) return;
         int randomIndex = Utilities.random.nextInt(segmentLength);
         int divider = input[randomIndex];
@@ -73,16 +86,18 @@ class Sorts {
         int currentHole = beginning;
         int previousHole = end - 1;
 
-        while(true) {
+        boolean foundSmaller = true;
+        boolean foundBigger = true;
+        while(foundBigger || foundSmaller) {
             int smallerItemIndex = Utilities.searchFromBack(input, previousHole, currentHole, divider);
-            if (smallerItemIndex == -1) break;
+            if (smallerItemIndex == -1) foundSmaller = false;
             else {
                 input[currentHole] = input[smallerItemIndex];
                 previousHole = currentHole;
                 currentHole = smallerItemIndex;
                 }
             int biggerItemIndex = Utilities.searchFromFront(input, previousHole, currentHole, divider);
-            if (biggerItemIndex == -1) break;
+            if (biggerItemIndex == -1) foundBigger = false;
             else {
                 input[currentHole] = input[biggerItemIndex];
                 previousHole = currentHole;
@@ -91,5 +106,5 @@ class Sorts {
 
         input[currentHole] = divider;
         quick(input, currentHole + 1, end);
-        quick(input, beginning, currentHole);
+        quick(input, beginning, currentHole - 1);
     }   }
