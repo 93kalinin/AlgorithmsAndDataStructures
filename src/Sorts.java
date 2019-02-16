@@ -87,6 +87,7 @@ class Sorts {
 
 
     /**
+     * !!!BROKEN!!!
      * Quicksort picks an array element and moves every element which is larger than the picked one to the right part
      * of the array, and each element that is smaller than the picked one to the left part. It then recursively calls
      * itself on those parts until they are one element long and therefore sorted. Finally, it merges the results
