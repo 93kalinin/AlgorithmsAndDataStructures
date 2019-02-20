@@ -7,6 +7,7 @@ class Sorts {
      * array, thus enlarging the sorted part by one element. Then the process repeats until the whole array is sorted.
      */
     static void insertion(int[] input) {
+        if (input == null  ||  input.length <= 1) return;
         for (int endOfSorted = 1; endOfSorted < input.length; ++endOfSorted) {
             int toBeSorted = input[endOfSorted];
             int insertHere = 0;
@@ -23,6 +24,7 @@ class Sorts {
      * puts the smallest element it found in that free cell and repeats the whole process until the array is sorted.
      */
     static void selection(int[] input) {
+        if (input == null  ||  input.length <= 1) return;
         for (int endOfSortedPart = 0; endOfSortedPart < input.length; ++endOfSortedPart) {
             int indexOfSmallest = Utilities.findSmallest(input, endOfSortedPart);
             int smallest = input[indexOfSmallest];
@@ -32,16 +34,19 @@ class Sorts {
         }   }
 
     /**
+     * !!!BUGGED!!!
      * Bubble sort passes an array forwards and backwards and swaps any pair of elements that it finds to be unordered.
      * Additionally, it only passes through the unsorted part of the array. If it passes a certain part of the array
      * and makes no swaps, the algorithm marks that part as sorted and ignores it for the rest of sorting.
      */
     static void bubble(int[] input) {
+        if (input == null  ||  input.length <= 1) return;
         boolean isSorted = false;
         boolean isFirstLeft = false;
         boolean isFirstRight = false;
         int firstLeft = 0;
         int firstRight = input.length - 1;
+
         while (!isSorted) {
             isSorted = true;
             isFirstLeft = false;
@@ -54,8 +59,7 @@ class Sorts {
                     int temporary = input[i];
                     input[i] = input[i + 1];
                     input[i + 1] = temporary;
-                }
-            }
+                }   }
             for (int i = input.length - 1; i > 1; --i) {
                 if (input[i] < input[i - 1]) {
                     isSorted = false;
@@ -64,10 +68,7 @@ class Sorts {
                     int temporary = input[i];
                     input[i] = input[i - 1];
                     input[i - 1] = temporary;
-                }
-            }
-        }
-    }
+        }   }   }   }
 
     /**
      * Heap sort turns an array into a binary heap. Then it puts the root of the heap into the sorted part of the array
@@ -101,6 +102,7 @@ class Sorts {
      * @param end -- the index of the end of the part of the array which should be sorted, exclusive
      */
     static void quick(int[] input, int beginning, int end) {
+        if (input == null  ||  input.length <= 1) return;
         if (end <= beginning) return;
         int segmentLength = end - beginning;
         int randomIndex = Utilities.random.nextInt(segmentLength) + beginning;
