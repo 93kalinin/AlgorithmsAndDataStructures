@@ -87,48 +87,44 @@ class Sorts {
 
 
     /**
-     * !!!BROKEN!!!
      * Quicksort picks an array element and moves every element which is larger than the picked one to the right part
      * of the array, and each element that is smaller than the picked one to the left part. It then recursively calls
-     * itself on those parts until they are one element long and therefore sorted. Finally, it merges the results
-     * in the sorted order. This implementation chooses a random dividing element and sorts in place. It can be done
-     * by going through the following steps. Swap the dividing element with the one at the beginning of the array.
-     * Remove it from the array. That frees up the first cell of it. Now search for an element which is less than the
-     * dividing one, starting from the end of the array. Put it in the free cell. There is another free cell now where
-     * that smaller element was removed from. Find an element that is larger than the dividing one, starting from
-     * the beginning of the array and put it in the free cell. Repeat until the two regions in which the search is
-     * being done meet somewhere and put the dividing item in the free cell Call the method recursively to keep sorting
+     * itself on those parts until they are one element long and therefore sorted. This implementation chooses a random
+     * dividing element and sorts in place. It can be done by going through the following steps. Swap the dividing
+     * element with the one at the beginning of the array. Remove it from the array. That frees up the first cell
+     * of it. Now search for an element which is less than the dividing one, starting from the end of the array. Put
+     * it in the free cell. There is another free cell now where that smaller element was removed from. Find an
+     * element that is larger than the dividing one, starting from the beginning of the array and put it in the free
+     * cell. Repeat until the two regions in which the search is being done meet somewhere and put the dividing item
+     * in the free cell. Call the method recursively to keep sorting.
      * @param beginning -- the index of the beginning of the part of the array which should be sorted, inclusive
      * @param end -- the index of the end of the part of the array which should be sorted, exclusive
      */
     static void quick(int[] input, int beginning, int end) {
+        if (end <= beginning) return;
         int segmentLength = end - beginning;
-        if (segmentLength <= 1) return;
-        int randomIndex = Utilities.random.nextInt(segmentLength);
+        int randomIndex = Utilities.random.nextInt(segmentLength) + beginning;
         int divider = input[randomIndex];
         input[randomIndex] = input[beginning];
-        int currentHole = beginning;
-        int previousHole = end - 1;
+        int hole = beginning;
 
-        boolean foundSmaller = true;
-        boolean foundBigger = true;
-        while(foundBigger || foundSmaller) {
-            int smallerItemIndex = Utilities.searchFromBack(input, previousHole, currentHole, divider);
-            if (smallerItemIndex == -1) foundSmaller = false;
-            else {
-                input[currentHole] = input[smallerItemIndex];
-                previousHole = currentHole;
-                currentHole = smallerItemIndex;
-                }
-            int biggerItemIndex = Utilities.searchFromFront(input, previousHole, currentHole, divider);
-            if (biggerItemIndex == -1) foundBigger = false;
-            else {
-                input[currentHole] = input[biggerItemIndex];
-                previousHole = currentHole;
-                currentHole = biggerItemIndex;
-            }   }
-
-        input[currentHole] = divider;
-        quick(input, currentHole + 1, end);
-        quick(input, beginning, currentHole - 1);
+        separation:
+        while (true) {
+            for (int i = end - 1; i >= beginning; --i) {
+                if (i == hole) break separation;
+                if (input[i] < divider) {
+                    input[hole] = input[i];
+                    hole = i;
+                    break;
+                }   }
+            for (int i = beginning; i < end; ++i) {
+                if (i == hole) break separation;
+                if (input[i] >= divider) {
+                    input[hole] = input[i];
+                    hole = i;
+                    break;
+            }   }   }
+        input[hole] = divider;
+        quick(input, beginning, hole);
+        quick(input, hole + 1, end);
     }   }
