@@ -42,8 +42,8 @@ class Sorts {
     static void bubble(int[] input) {
         if (input == null  ||  input.length <= 1) return;
         boolean isSorted = false;
-        boolean isFirstLeft = false;
-        boolean isFirstRight = false;
+        boolean isFirstLeft;
+        boolean isFirstRight;
         int firstLeft = 0;
         int firstRight = input.length - 1;
 
@@ -51,7 +51,7 @@ class Sorts {
             isSorted = true;
             isFirstLeft = false;
             isFirstRight = false;
-            for (int i = firstLeft; i < firstRight; ++i) {
+            for (int i = firstLeft; i < input.length - 1; ++i) {
                 if (input[i] > input[i + 1]) {
                     isSorted = false;
                     if (!isFirstLeft) firstLeft = i;
@@ -60,7 +60,7 @@ class Sorts {
                     input[i] = input[i + 1];
                     input[i + 1] = temporary;
                 }   }
-            for (int i = input.length - 1; i > 1; --i) {
+            for (int i = firstRight; i >= 1; --i) {
                 if (input[i] < input[i - 1]) {
                     isSorted = false;
                     if (!isFirstRight) firstRight = i;
