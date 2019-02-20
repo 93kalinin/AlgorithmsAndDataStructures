@@ -34,7 +34,6 @@ class Sorts {
         }   }
 
     /**
-     * !!!BUGGED!!!
      * Bubble sort passes an array forwards and backwards and swaps any pair of elements that it finds to be unordered.
      * Additionally, it only passes through the unsorted part of the array. If it passes a certain part of the array
      * and makes no swaps, the algorithm marks that part as sorted and ignores it for the rest of sorting.
