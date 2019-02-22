@@ -7,7 +7,7 @@ class Utilities {
     /**
      * @param beginning the index from which the method will start searching, inclusive
      * @param end the index on which the method will stop searching, exclusive
-     * @param divider the item to which other items in the search segment will be compared to find the one that is
+     * @param divider the item to which other items in the search segment will be compared to checkIfPresent the one that is
      * smaller than the divider. Search segment is the part of the input array between beginning and end.
      * @return index of the item in the input array which is smaller than the divider or -1 if no such item is found
      */
@@ -20,7 +20,7 @@ class Utilities {
     /**
      * @param beginning the index from which the method will start searching, inclusive
      * @param end the index on which the method will stop searching, exclusive
-     * @param divider the item to which other items in the search segment will be compared to find the one that is
+     * @param divider the item to which other items in the search segment will be compared to checkIfPresent the one that is
      * bigger or equal to the the divider. Search segment is the part of the input array between beginning and end.
      * @return index of the item in the input array which is bigger than or equal to the divider or -1 if no such
      * item is found
