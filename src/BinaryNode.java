@@ -3,31 +3,31 @@ import java.util.Objects;
 /*
  * This implementation of a binary search tree relies entirely on the concept of binary node and does not have any
  * external class for the sake of simplicity. It cannot hold null values or several identical values.
- * It will ignore any attempts to add these invalid values.
+ * It will ignore any attempts to add these invalid values. If a node contains null as its value, it's considered
+ * to be nonexistent.
  */
 class BinaryNode<T extends Comparable<T>> {
-    /*TODO: предусмотреть пустое дерево из единственного узла, содержащего null. Новый конструктор и пересмотр методов
-    в этой реализации можно считать узел отсутствующим, если ссылка на него null или если его value == null
-    проверку двух этих условий, возможно, можно просто вынести в convenience method
-     */
+
     private T value;
     private BinaryNode<T> left;
     private BinaryNode<T> right;
-    private BinaryNode<T> parent;
 
-    BinaryNode(T arg) throws NullPointerException {
+    BinaryNode() { this.value = null; }    /* makes an empty tree */
+
+    BinaryNode(T arg) {
         this.value = Objects.requireNonNull(arg, "This tree cannot hold null values");
         }
 
     private BinaryNode<T> find(T arg) {
+        if (this.value == null) return null;
         if (this.value.compareTo(arg) == 0) return this;
-        BinaryNode<T> target = (this.value.compareTo(arg) > 0) ? this.left : this.right;
-        if (target == null) return null;
-        return target.find(arg);
+        BinaryNode<T> next = (this.value.compareTo(arg) > 0) ? this.left : this.right;
+        if (next == null) return null;
+        return next.find(arg);
         }
 
     private BinaryNode<T> rightmost() {
-        if (this.right == null) return this;
+        if (!this.hasRight()) return this;
         return this.right.rightmost();
         }
 
@@ -35,7 +35,6 @@ class BinaryNode<T extends Comparable<T>> {
         this.value = arg.value;
         this.left = arg.left;
         this.right = arg.right;
-        this.parent = arg.parent;
         }
 
     private boolean hasLeft() { return this.left != null  &&  this.left.value != null; }
@@ -45,11 +44,11 @@ class BinaryNode<T extends Comparable<T>> {
     void insert(T arg) {
         if (arg == null  ||  this.value.compareTo(arg) == 0) return;
         if (this.value.compareTo(arg) > 0) {
-            if (this.left == null) this.left = new BinaryNode<T>(arg);
+            if (!this.hasLeft()) this.left = new BinaryNode<T>(arg);
             else this.left.insert(arg);
             }
         else {
-            if (this.right == null) this.right = new BinaryNode<T>(arg);
+            if (!this.hasRight()) this.right = new BinaryNode<T>(arg);
             else this.right.insert(arg);
         }   }
 
@@ -72,4 +71,8 @@ class BinaryNode<T extends Comparable<T>> {
             else throw new UnsupportedOperationException("Not implemented yet");
         }   }
 
-    }
+    void printInorder() {
+        if (this.hasLeft()) this.left.printInorder();
+        System.out.print(this.value);
+        if (this.hasRight()) this.right.printInorder();
+    }   }
