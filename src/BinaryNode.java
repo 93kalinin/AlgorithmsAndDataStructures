@@ -42,7 +42,9 @@ class BinaryNode<T extends Comparable<T>> {
     private boolean hasRight() { return this.right != null  &&  this.right.value != null; }
 
     void insert(T arg) {
-        if (arg == null  ||  this.value.compareTo(arg) == 0) return;
+        if (arg == null) return;
+        if (this.value == null) this.value = arg;
+        if (this.value.compareTo(arg) == 0) return;
         if (this.value.compareTo(arg) > 0) {
             if (!this.hasLeft()) this.left = new BinaryNode<T>(arg);
             else this.left.insert(arg);
@@ -75,4 +77,13 @@ class BinaryNode<T extends Comparable<T>> {
         if (this.hasLeft()) this.left.printInorder();
         System.out.print(this.value);
         if (this.hasRight()) this.right.printInorder();
+        }
+
+    public static void main(String... args) {
+        BinaryNode<Character> tree = new BinaryNode<>();
+        String chars = "ABCDEFGHIJ";
+        for (int i = 0; i < chars.length(); ++i) tree.insert(chars.charAt(i));
+        tree.remove('B');
+        tree.remove('G');
+        tree.printInorder();
     }   }
